@@ -2,7 +2,10 @@
   "name": "html-builder",
   "version": "1.0.0",
   "description": "html-builder task for RSSchool",
+
   "scripts": {
+    "01-read-file": "node index.js",
+    "02-write-file": "node index.js",
     "lint": "eslint .",
     "format": "prettier --write .",
     "ci:format": "prettier --check ."
