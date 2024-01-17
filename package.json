@@ -6,6 +6,7 @@
   "scripts": {
     "01-read-file": "node index.js",
     "02-write-file": "node index.js",
+    "03-files-in-folder": "node index.js",
     "lint": "eslint .",
     "format": "prettier --write .",
     "ci:format": "prettier --check ."
