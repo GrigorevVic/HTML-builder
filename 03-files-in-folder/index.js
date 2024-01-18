@@ -4,10 +4,9 @@ const fss = require('fs');
 
 const fileName = "secret-folder";
 const getPath = (filename) => path.join(__dirname, filename);
-
 const pathToDir = getPath(fileName);
 
-const unionFiles = async (pathToDir) => {
+const getStatsFiles = async (pathToDir) => {
     const data = await fs.readdir(pathToDir, { withFileTypes: true });
     const files = data.filter(file => file.isFile());
     files.forEach(file => {
@@ -20,6 +19,6 @@ const unionFiles = async (pathToDir) => {
     });
 };
 
-unionFiles(pathToDir);
+getStatsFiles(pathToDir);
 
 
