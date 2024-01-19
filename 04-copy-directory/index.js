@@ -21,6 +21,7 @@ fs.mkdir(pathToDirCopy,
 const copyFiles = async () => {
     const data = await fss.readdir(pathToDir, { withFileTypes: true });
     data.forEach(async (file) => {
+        console.log(file)
         const pathToFile = getPath(path.join(fileName, file.name));
         const pathToFileCopy = getPath(path.join(fileNameCopy, file.name));
         try {
