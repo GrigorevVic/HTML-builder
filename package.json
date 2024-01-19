@@ -8,6 +8,8 @@
     "02-write-file": "node index.js",
     "03-files-in-folder": "node index.js",
     "04-copy-directory": "node index.js",
+    "05-merge-styles": "node index.js",
+    "06-build-page": "node index.js",
     "lint": "eslint .",
     "format": "prettier --write .",
     "ci:format": "prettier --check ."

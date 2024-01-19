@@ -10,4 +10,3 @@ const readableStream = fs.createReadStream(getPath(fileName));
 readableStream.on("data", function(chunk){ 
     console.log(chunk.toString());
 });
-
