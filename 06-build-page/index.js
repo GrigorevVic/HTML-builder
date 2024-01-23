@@ -30,7 +30,7 @@ async function createIndexHtml() {
                     if (err) {
                         return console.error(err);
                     }
-                    //console.log('Directory created successfully!\n');
+                    // console.log('Directory created successfully! ****project-dist****\n');
                 });
             fs.writeFile(`${pathToDist}/${fileIndex}`, newTemplate, function (error) {
                 if (error) {
@@ -40,58 +40,50 @@ async function createIndexHtml() {
             });
         });
 
+        /* создание style.css - начало */
+        const style = "project-dist/style.css";
+        const dirName = "styles";
+        const bundle = [];
+
+        const pathToDir = getPath(dirName);
+
+        const data2 = await fsp.readdir(pathToDir, { withFileTypes: true });
+        const files = data2.filter((file) => {
+            const pathToFile = getPath(path.join(pathToDir, file.name));
+            const ext = path.extname(pathToFile);
+            if (file.isFile() && ext === '.css') {
+                return file;
+            }
+        });
+
+        files.forEach(async (file) => {
+            const pathToFile = getPath(`styles/${file.name}`);
+            const readableStream = fs.createReadStream(pathToFile);
+            readableStream.on("data", function (chunk) {
+                bundle.push(chunk.toString());
+                fs.writeFile(getPath(style), bundle.join(''), function (error) {
+                    if (error) {
+                        return console.log(error);
+                    }
+                    //console.log("File successfully recorded");
+                });
+            });
+        });
     } catch (error) {
         console.error(`Got an error trying to read the file: ${error.message}`);
     }
 }
 createIndexHtml();
-/* создание index.html - конец */
-
-/* создание style.css - начало */
-const style = "project-dist/style.css";
-const dirName = "styles";
-const bundle = [];
-
-const pathToDir = getPath(dirName);
-
-const createStyleCss = async (pathToDir) => {
-    const data = await fsp.readdir(pathToDir, { withFileTypes: true });
-    const files = data.filter((file) => {
-        const pathToFile = getPath(path.join(pathToDir, file.name));
-        const ext = path.extname(pathToFile);
-        if (file.isFile() && ext === '.css') {
-            return file;
-        }
-    });
-
-    files.forEach(async (file) => {
-        const pathToFile = getPath(`styles/${file.name}`);
-        const readableStream = fs.createReadStream(pathToFile);
-        readableStream.on("data", function (chunk) {
-            bundle.push(chunk.toString());
-            fs.writeFile(getPath(style), bundle.join(''), function (error) {
-                if (error) {
-                    return console.log(error);
-                }
-                //console.log("File successfully recorded");
-            });
-        });
-    });
-};
-createStyleCss(pathToDir);
-
-/* создание style.css - конец */
 
 /* создание assets - начало */
 const fileName = "assets";
 const fileNameCopy = "project-dist/assets";
 
-    fs.cp(getPath(fileName), getPath(fileNameCopy),{recursive: true} ,function (error) {
+fs.cp(getPath(fileName), getPath(fileNameCopy), { recursive: true }, function (error) {
     if (error) {
         console.error('The file could not be copied\n', error);
     }
     //console.log("File successfully copy");
-});  
-
+});
 
 /* создание assets - конец */
